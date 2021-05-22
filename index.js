@@ -300,8 +300,8 @@ const start = async function() {
 
 			//if our signal is completely wrong, close poition
 			var side = await getPositionSide();
-			if( (side == "SELL" && signal[signal.length - 1] == 1) ||
-				(side == "BUY" && signal[signal.length - 1] == -1) ) {
+			if( (side == "SELL" && signal[signal.length - 1]!= -1) ||
+				(side == "BUY" && signal[signal.length - 1] != 1) ) {
 				console.log("Side is different from signal ", side, ", ", signal[signal.length-2]);
 			    console.log(await closePosition());
 
