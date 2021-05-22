@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "node-binance-api": "*"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
