@@ -250,8 +250,8 @@ const start = async function() {
 		console.log("iteration ", ctr++);
 		var isInPosition = await getPositionAmt();
 
-		// var sticks = await getHeikinAsihi("3m");
-		// var signal1 = await talonSniper(sticks);
+		var sticks = await getHeikinAsihi("1m");
+		var signal1 = await talonSniper(sticks);
 
 
 		var sticks2 = await getHeikinAsihi("5m");
@@ -264,7 +264,7 @@ const start = async function() {
 		var final_signal =[];
 
 		for (i=0; i<signal2.length;i++)
-			final_signal.push( parseInt((signal2[i] + signal3[i]) /2));
+			final_signal.push( parseInt((signal1[i] + signal2[i] + signal3[i]) / 3 ));
 
 
 		var signal = final_signal;
@@ -273,9 +273,9 @@ const start = async function() {
 
 		// if not in position
 		if (isInPosition == 0) {
-			if (signal[signal.length - 1] == 1) {
+			if (signal[signal.length - 2] == 1) {
 				console.log("Going for buy, signal is long", await marketBuy(0.001, 5, false));
-			} else if (signal[signal.length - 1] == -1) {
+			} else if (signal[signal.length - 2] == -1) {
 				console.log("Going for sell, signal is short", await marketSell(0.001, 5, false));
 			} else {
 				console.log("do nothing");
@@ -300,8 +300,8 @@ const start = async function() {
 
 			//if our signal is completely wrong, close poition
 			var side = await getPositionSide();
-			if( (side == "SELL" && signal[signal.length - 1]!= -1) ||
-				(side == "BUY" && signal[signal.length - 1] != 1) ) {
+			if( (side == "SELL" && signal[signal.length - 2]!= -1) ||
+				(side == "BUY" && signal[signal.length - 2] != 1) ) {
 				console.log("Side is different from signal ", side, ", ", signal[signal.length-2]);
 			    console.log(await closePosition());
 
